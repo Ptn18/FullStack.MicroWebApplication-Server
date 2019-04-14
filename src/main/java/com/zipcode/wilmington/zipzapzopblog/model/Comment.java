@@ -1,24 +1,46 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 @Entity
+@Table(name = "comment")
 public class Comment {
-
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
+    Long id;
+    @Column(name = "body", columnDefinition = "TEXT")
+    @NotEmpty(message = "*Please write something")
     private String body;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "create_date", nullable = false, updatable = false)
+    @CreationTimestamp
     private Date creationDate;
-    private Long postId;
-    private User user;
+    @ManyToOne
+
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = true)
+    //@NotNull
     private Post post;
 
-    public Post getPost() {
-        return post;
+    @ManyToOne
+
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = true)
+    //@NotNull
+    private User user;
+
+
+    public Comment() {
+
     }
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
+
+
 
     public Long getId() {
         return id;
@@ -44,12 +66,12 @@ public class Comment {
         this.creationDate = creationDate;
     }
 
-    public Long getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public User getUser() {
@@ -59,6 +81,4 @@ public class Comment {
     public void setUser(User user) {
         this.user = user;
     }
-
-
 }

@@ -1,19 +1,45 @@
 package com.zipcode.wilmington.zipzapzopblog.model;
 
-import com.zipcode.wilmington.zipzapzopblog.model.Post;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import java.util.Collection;
 @Entity
+@Table(name = "user")
 public class User {
-    private Long id;
+
+    @Column(name = "user_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "email", unique = false, nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "username", nullable = false, unique = false)
     private String username;
-    private String name;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
-    private int active;
-    private Collection<Post> posts;
+//
+//    @OneToMany(mappedBy = "user")
+//    private Collection<Post> posts;
+
+    public User() {
+
+    }
+
+    public User(String email, String password, String username, String firstName, String lastName) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public Long getId() {
         return id;
@@ -47,12 +73,12 @@ public class User {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -63,19 +89,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
-
-    public Collection<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Collection<Post> posts) {
-        this.posts = posts;
-    }
+//    public Collection<Post> getPosts() {
+//        return posts;
+//    }
+//
+//    public void setPosts(Collection<Post> posts) {
+//        this.posts = posts;
+//    }
 }
